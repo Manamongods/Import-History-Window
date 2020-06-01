@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 
-public class ImportHistoryProcessing : AssetPostprocessor
+public class ImportHistoryPP : AssetPostprocessor
 {
+    public static readonly List<string> ignores = new List<string>();
+
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
         var windows = Resources.FindObjectsOfTypeAll<ImportHistoryWindow>();
@@ -22,11 +24,35 @@ public class ImportHistoryProcessing : AssetPostprocessor
             for (int ii = 0; ii < movedFromAssetPaths.Length; ii++)
                 w.history.Remove(movedFromAssetPaths[ii]);
 
+            void Add(string path)
+            {
+                if (ignores.Contains(path))
+                    ignores.Remove(path);
+                else
+                    w.Add(path);
+            }
+
             for (int ii = 0; ii < importedAssets.Length; ii++)
-                w.Add(importedAssets[ii]);
+                Add(importedAssets[ii]);
             for (int ii = 0; ii < movedAssets.Length; ii++)
-                w.Add(movedAssets[ii]);
+                Add(movedAssets[ii]);
         }
+    }
+}
+
+public class ImportHistoryMP : UnityEditor.AssetModificationProcessor
+{
+    static string[] OnWillSaveAssets(string[] paths)
+    {
+        //Ignores assets which will be modified by Unity itself
+        for (int i = 0; i < paths.Length; i++)
+        {
+            var path = paths[i];
+            if (!ImportHistoryPP.ignores.Contains(path))
+                ImportHistoryPP.ignores.Add(path);
+        }
+
+        return paths;
     }
 }
 
