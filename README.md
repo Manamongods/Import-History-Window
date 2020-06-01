@@ -1,11 +1,12 @@
-# Import History Window
+# Import History Window for Unity
  
 This is a simple and very small window that can be used to quickly get access to recently imported (modified/created) files, instead of traversing your folder hierarchies.
 
-This is especially useful because you've probably already traversed the folders in whatever external programs you used, to create the files, and it's a pain to have to find the locations again.
+This is especially useful because you've probably already traversed the folders in whatever external programs you used, to create the files, and it's a pain to have to find the locations again, in Unity.
 
+![IHW](https://user-images.githubusercontent.com/45214197/83461368-d37d9c00-a468-11ea-9764-6c1311eb808b.PNG)
 
-Whenever a file is modified repeatedly, the older entries are removed.
+Whenever a file is modified repeatedly, the older entries are removed. The entries are sorted newer at the top, older at the bottom. New not necessarily being the most recently modified, but the most recently imported (several modified files can be imported at once).
 
 - You add the window in "Window/Import History"
 - Double clicking will open the file
@@ -15,8 +16,8 @@ Whenever a file is modified repeatedly, the older entries are removed.
 
 You have the following settings which can be modified in the .cs file:
 - comment out "#define FOLDER_BUTTON" at the top, if you don't want the button which opens the folder
-- You can add/remove extensions in IGNORED_EXTENSIONS
-- HISTORY_LENGTH is the maximum number of entries
+- You can add/remove extensions in IGNORED_EXTENSIONS. These extensions are for files that do not communicate directly with Unity, such as PixaFlux's .pxf or Affinity's .afdesign. Those files create other files which ARE read by Unity, but aren't useful within Unity themselves, so it's best to ignore those extensions.
+- HISTORY_LENGTH is the maximum number of entries remembered
 - DOUBLE_CLICK_TIME is the maximum length of time that can register a double click (to open the file)
-- HEIGHT is the height of the entries
+- HEIGHT is the height of an entry
 - MARGIN is the spacing (left, right, top, and bottom) between the buttons
