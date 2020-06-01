@@ -37,6 +37,7 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
     {
         "", //Most often a folder
         ".afdesign",
+        ".pxf",
     };
 
     private const int HISTORY_LENGTH = 32;
