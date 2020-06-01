@@ -6,7 +6,7 @@ This is especially useful because you've probably already traversed the folders 
 
 ![IHW](https://user-images.githubusercontent.com/45214197/83461368-d37d9c00-a468-11ea-9764-6c1311eb808b.PNG)
 
-Whenever a file is modified repeatedly, the older entries are removed.
+Whenever a file is modified repeatedly, the older entries are removed. The entries are sorted newer at the top, older at the bottom. New not necessarily being the most recently modified, but the most recently imported (several modified files can be imported at once).
 
 - You add the window in "Window/Import History"
 - Double clicking will open the file
