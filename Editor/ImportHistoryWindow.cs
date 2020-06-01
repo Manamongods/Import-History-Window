@@ -48,6 +48,9 @@ public class ImportHistoryMP : UnityEditor.AssetModificationProcessor
         for (int i = 0; i < paths.Length; i++)
         {
             var path = paths[i];
+            if (path.EndsWith(".meta"))
+                path = path.Substring(0, path.Length - 5);
+
             if (!ImportHistoryPP.ignores.Contains(path))
                 ImportHistoryPP.ignores.Add(path);
         }
