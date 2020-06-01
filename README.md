@@ -4,6 +4,7 @@ This is a simple and very small window that can be used to quickly get access to
 
 This is especially useful because you've probably already traversed the folders in whatever external programs you used, to create the files, and it's a pain to have to find the locations again, in Unity.
 
+![IHW](https://user-images.githubusercontent.com/45214197/83461368-d37d9c00-a468-11ea-9764-6c1311eb808b.PNG)
 
 Whenever a file is modified repeatedly, the older entries are removed.
 
