@@ -31,10 +31,27 @@ public class ImportHistoryPP : AssetPostprocessor
                     w.Add(path);
             }
 
-            for (int ii = 0; ii < importedAssets.Length; ii++)
-                Add(importedAssets[ii]);
             for (int ii = 0; ii < movedAssets.Length; ii++)
-                Add(movedAssets[ii]);
+            {
+                var moved = movedAssets[ii];
+
+                bool imported = false; //Renaming an asset in Unity will call both movedAssets and importedAssets, but that creates a problem for the ignores
+                for (int iii = 0; iii < importedAssets.Length; iii++)
+                {
+                    if(importedAssets[iii] == moved)
+                    {
+                        imported = true;
+                        break;
+                    }
+                }
+
+                if(!imported)
+                    Add(moved);
+            }
+            for (int ii = 0; ii < importedAssets.Length; ii++)
+            {
+                Add(importedAssets[ii]);
+            }
         }
     }
 }
