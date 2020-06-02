@@ -59,6 +59,14 @@ public class ImportHistoryMP : UnityEditor.AssetModificationProcessor
 
         return paths;
     }
+
+    private static AssetMoveResult OnWillMoveAsset(string sourcePath, string destinationPath)
+    {
+        if (!ImportHistoryPP.ignores.Contains(destinationPath))
+            ImportHistoryPP.ignores.Add(destinationPath);
+
+        return AssetMoveResult.DidNotMove;
+    }
 }
 #endif
 
