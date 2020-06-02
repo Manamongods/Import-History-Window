@@ -53,6 +53,10 @@ public class ImportHistoryMP : UnityEditor.AssetModificationProcessor
             if (path.EndsWith(".meta"))
                 path = path.Substring(0, path.Length - 5);
 
+            //If the asset doesn't exist yet, then don't ignore
+            if (AssetDatabase.LoadAssetAtPath(path, typeof(UnityEngine.Object)) == null)
+                continue;
+
             if (!ImportHistoryPP.ignores.Contains(path))
                 ImportHistoryPP.ignores.Add(path);
         }
