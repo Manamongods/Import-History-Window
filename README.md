@@ -6,7 +6,7 @@ This is especially useful because you've probably already traversed the folders 
 
 ![IHW](https://user-images.githubusercontent.com/45214197/83461368-d37d9c00-a468-11ea-9764-6c1311eb808b.PNG)
 
-Whenever a file is modified repeatedly, the older entries are removed. The entries are sorted newer at the top, older at the bottom. New not necessarily being the most recently modified, but the most recently imported (several modified files can be imported at once).
+Whenever a file is modified repeatedly, the older entries are removed. The entries are sorted newer at the top, older at the bottom. New not necessarily being the most recently modified, but the most recently imported (several modified files can be imported at once). Files modified by Unity are ignored; only external modifications are considered.
 
 - You add the window in "Window/Import History"
 - Double clicking will open the file
@@ -16,6 +16,7 @@ Whenever a file is modified repeatedly, the older entries are removed. The entri
 
 You have the following settings which can be modified in the .cs file:
 - comment out "#define FOLDER_BUTTON" at the top, if you don't want the button which opens the folder
+- comment out "#define IGNORE_UNITY_MODIFICATIONS", if you want Unity-modified files to be considered
 - You can add/remove extensions in IGNORED_EXTENSIONS. These extensions are for files that do not communicate directly with Unity, such as PixaFlux's .pxf or Affinity's .afdesign. Those files create other files which ARE read by Unity, but aren't useful within Unity themselves, so it's best to ignore those extensions.
 - HISTORY_LENGTH is the maximum number of entries remembered
 - DOUBLE_CLICK_TIME is the maximum length of time that can register a double click (to open the file)
