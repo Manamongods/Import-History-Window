@@ -10,7 +10,7 @@ using System.IO;
 
 public class ImportHistoryPP : AssetPostprocessor
 {
-    public static readonly List<string> ignores = new List<string>();
+    public static readonly HashSet<string> ignores = new HashSet<string>();
 
     private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
@@ -27,9 +27,7 @@ public class ImportHistoryPP : AssetPostprocessor
 
             void Add(string path)
             {
-                if (ignores.Contains(path))
-                    ignores.Remove(path);
-                else
+                if (!ignores.Remove(path))
                     w.Add(path);
             }
 
@@ -44,21 +42,27 @@ public class ImportHistoryPP : AssetPostprocessor
 #if IGNORE_UNITY_MODIFICATIONS
 public class ImportHistoryMP : UnityEditor.AssetModificationProcessor
 {
+    private static readonly HashSet<string> ignores = new HashSet<string>();
+
+    private static void OnWillCreateAsset(string path)
+    {
+        ignores.Add(path);
+    }
+
     private static string[] OnWillSaveAssets(string[] paths)
     {
         //Ignores assets which will be modified by Unity itself
         for (int i = 0; i < paths.Length; i++)
         {
             var path = paths[i];
-            if (path.EndsWith(".meta"))
-                path = path.Substring(0, path.Length - 5);
 
-            //If the asset doesn't exist yet, then don't ignore
-            if (AssetDatabase.LoadAssetAtPath(path, typeof(UnityEngine.Object)) == null)
-                continue;
+            if (!ignores.Remove(path))
+            {
+                if (path.EndsWith(".meta"))
+                    path = path.Substring(0, path.Length - 5);
 
-            if (!ImportHistoryPP.ignores.Contains(path))
                 ImportHistoryPP.ignores.Add(path);
+            }
         }
 
         return paths;
@@ -66,8 +70,7 @@ public class ImportHistoryMP : UnityEditor.AssetModificationProcessor
 
     private static AssetMoveResult OnWillMoveAsset(string sourcePath, string destinationPath)
     {
-        if (!ImportHistoryPP.ignores.Contains(destinationPath))
-            ImportHistoryPP.ignores.Add(destinationPath);
+        ImportHistoryPP.ignores.Add(destinationPath);
 
         return AssetMoveResult.DidNotMove;
     }
