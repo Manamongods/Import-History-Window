@@ -1,4 +1,5 @@
 ﻿#define FOLDER_BUTTON
+#define IGNORE_UNITY_MODIFICATIONS
 
 using UnityEngine;
 using UnityEditor;
@@ -11,7 +12,7 @@ public class ImportHistoryPP : AssetPostprocessor
 {
     public static readonly List<string> ignores = new List<string>();
 
-    static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+    private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
         var windows = Resources.FindObjectsOfTypeAll<ImportHistoryWindow>();
 
@@ -40,9 +41,10 @@ public class ImportHistoryPP : AssetPostprocessor
     }
 }
 
+#if IGNORE_UNITY_MODIFICATIONS
 public class ImportHistoryMP : UnityEditor.AssetModificationProcessor
 {
-    static string[] OnWillSaveAssets(string[] paths)
+    private static string[] OnWillSaveAssets(string[] paths)
     {
         //Ignores assets which will be modified by Unity itself
         for (int i = 0; i < paths.Length; i++)
@@ -58,6 +60,7 @@ public class ImportHistoryMP : UnityEditor.AssetModificationProcessor
         return paths;
     }
 }
+#endif
 
 public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
 {
