@@ -15,6 +15,9 @@ public class ImportHistoryPP : AssetPostprocessor
 
     private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
+        ImportHistoryWindow.TryRead();
+
+
         //Ignores massive operations
         const int MAX_COUNT = 300;
         int count = deletedAssets.Length + movedAssets.Length + importedAssets.Length;
@@ -106,11 +109,13 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
     private static readonly string[] IGNORED_EXTENSIONS = new string[]
     {
         "", //Most often a folder
-        ".afdesign",
+        //".afdesign",
         ".pxf",
+        //".xcf",
 
         ".prefab",
-        ".asset"
+        ".asset",
+        ".mat",
     };
 
     private const int HISTORY_LENGTH = 32;
@@ -208,6 +213,11 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
             EditorPrefs.SetString("Import History", sb.ToString());
         }
     }
+    public static void TryRead()
+    {
+        if (history.Count == 0)
+            Read();
+    }
     private static void Read()
     {
         history.Clear();
@@ -232,8 +242,7 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
 
         folderIcon = Resources.Load<Texture>("IHW Folder Icon");
 
-        if (history.Count == 0)
-            Read();
+        TryRead();
     }
 
     public void OnGUI()
