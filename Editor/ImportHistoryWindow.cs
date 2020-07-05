@@ -300,7 +300,8 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
 
                         //Pings and selects
                         EditorGUIUtility.PingObject(asset);
-                        Selection.activeObject = asset;
+                        if(!Event.current.shift)
+                            Selection.activeObject = asset;
 
                         var clickDelay = EditorApplication.timeSinceStartup - clickTime;
                         if (previouslyClicked == asset && clickDelay < DOUBLE_CLICK_TIME)
