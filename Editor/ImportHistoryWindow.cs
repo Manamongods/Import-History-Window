@@ -36,7 +36,7 @@ public class ImportHistoryPP : AssetPostprocessor
         void Add(string path)
         {
             if (!ignores.Remove(path))
-                ImportHistoryWindow.Add(path);
+                ImportHistoryWindow.Add(path, false);
         }
 
         for (int ii = 0; ii < movedAssets.Length; ii++)
@@ -157,7 +157,7 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
         TryWrite();
     }
 
-    public static void Add(string path)
+    public static void Add(string path, bool force = true)
     {
         path = path.Replace("\\", "/");
 
