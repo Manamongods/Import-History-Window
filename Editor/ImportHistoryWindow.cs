@@ -162,13 +162,16 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
         path = path.Replace("\\", "/");
 
         //Ignores by extension
-        var lower = path.ToLowerInvariant();
-        for (int i = 0; i < IGNORED_EXTENSIONS.Length; i++)
+        if (!force)
         {
-            var ext = IGNORED_EXTENSIONS[i];
+            var lower = path.ToLowerInvariant();
+            for (int i = 0; i < IGNORED_EXTENSIONS.Length; i++)
+            {
+                var ext = IGNORED_EXTENSIONS[i];
 
-            if (Path.GetExtension(lower) == ext)
-                return;
+                if (Path.GetExtension(lower) == ext)
+                    return;
+            }
         }
 
         //Removes Duplicates
@@ -197,7 +200,7 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
 
     public static void TryWrite()
     {
-        if(dirty)
+        if (dirty)
         {
             dirty = false;
 
@@ -228,7 +231,7 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
         for (int i = 0; i < paths.Length; i++)
         {
             var p = paths[i];
-            if(!string.IsNullOrEmpty(p))
+            if (!string.IsNullOrEmpty(p))
                 history.Add(p);
         }
     }
@@ -280,7 +283,7 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
             for (int i = 0; i < history.Count; i++)
             {
                 var path = history[i];
-                
+
                 GUILayout.BeginHorizontal(GUILayout.Width(windowWidth));
                 {
                     //Ping Button
@@ -300,7 +303,7 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
 
                         //Pings and selects
                         EditorGUIUtility.PingObject(asset);
-                        if(!Event.current.shift)
+                        if (!Event.current.shift)
                             Selection.activeObject = asset;
 
                         var clickDelay = EditorApplication.timeSinceStartup - clickTime;
