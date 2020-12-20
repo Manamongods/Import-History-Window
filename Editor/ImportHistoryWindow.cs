@@ -109,9 +109,9 @@ public class ImportHistoryWindow : EditorWindow, IHasCustomMenu
     private static readonly string[] IGNORED_EXTENSIONS = new string[]
     {
         "", //Most often a folder
-        //".afdesign",
-        ".pxf",
-        //".xcf",
+        //".afdesign", //Affinity Designer
+        ".pxf", //PixaFlux
+        //".xcf", //GIMP
 
         ".prefab",
         ".asset",
