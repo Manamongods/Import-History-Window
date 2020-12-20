@@ -19,7 +19,7 @@ public class ImportHistoryPP : AssetPostprocessor
 
 
         //Ignores massive operations
-        const int MAX_COUNT = 300;
+        const int MAX_COUNT = 100;
         int count = deletedAssets.Length + movedAssets.Length + importedAssets.Length;
         if (count > MAX_COUNT)
         {
